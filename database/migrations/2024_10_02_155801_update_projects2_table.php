@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //for jira
         Schema::create('projects', function (Blueprint $table) {
             $table->dropForeign(['client_id','designer_id']);
             $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
