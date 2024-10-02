@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         //for jira
-        Schema::create('projects', function (Blueprint $table) {
-            $table->dropForeign(['client_id','designer_id']);
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign('projects_client_id_foreign');
+            $table->dropForeign('projects_designer_id_foreign');
+            $table->dropColumn('client_id');
+            $table->dropColumn('designer_id');
             $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('designer_id')->constrained('users')->onDelete('cascade');
         });
@@ -24,6 +27,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign('projects_client_id_foreign');
+            $table->dropForeign('projects_designer_id_foreign');
+            $table->dropColumn('client_id');
+            $table->dropColumn('designer_id');
+            $table->foreignId('client_id')->constrained('users');
+            $table->foreignId('designer_id')->constrained('users');
+        });
     }
 };
