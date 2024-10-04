@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\UserController;
@@ -58,6 +59,15 @@ Route::prefix('admin')->group(function () {
     Route::put('/payments/{payments}', [PaymentController::class, 'update'])->name('admin.payments.update');
     Route::delete('/payments/{payments}', [PaymentController::class, 'destroy'])->name('admin.payments.destroy');
     Route::get('/payments/filter', [PaymentController::class, 'filter'])->name('admin.payments.filter');
+
+    //Projects
+    Route::get('/projects', [ProjectController::class, 'index'])->name('admin.projects.index');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('admin.projects.create');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('admin.projects.store');
+    Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('admin.projects.edit');
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('admin.projects.update');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy');
+    Route::get('/projects/filter', [ProjectController::class, 'filter'])->name('admin.projects.filter');
 
     // admin
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin');
