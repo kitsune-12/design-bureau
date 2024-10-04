@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Designer extends User
 {
+    use HasFactory;
+    protected $table = 'users';
     protected $fillable = [
         'specialization_id',
 
@@ -30,7 +32,9 @@ class Designer extends User
         parent::boot();
 
         static::addGlobalScope('designer', function ($builder) {
-            $builder->where('role', 'designer');
+            $builder->whereHas('role', function ($query) {
+                $query->where('role_name', 'designer');
+            });
         });
     }
 
