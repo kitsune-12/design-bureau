@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\UserController;
@@ -40,7 +41,7 @@ Route::prefix('admin')->group(function () {
     Route::delete('/specializations/{specialization}', [SpecializationController::class, 'destroy'])->name('admin.specializations.destroy');
     Route::get('/specializations/filter', [SpecializationController::class, 'filter'])->name('admin.specializations.filter');
 
-    //Material
+    //Materials
     Route::get('/materials', [MaterialController::class, 'index'])->name('admin.materials.index');
     Route::get('/materials/create', [MaterialController::class, 'create'])->name('admin.materials.create');
     Route::post('/materials', [MaterialController::class, 'store'])->name('admin.materials.store');
@@ -48,6 +49,15 @@ Route::prefix('admin')->group(function () {
     Route::put('/materials/{material}', [MaterialController::class, 'update'])->name('admin.materials.update');
     Route::delete('/materials/{material}', [MaterialController::class, 'destroy'])->name('admin.materials.destroy');
     Route::get('/materials/filter', [MaterialController::class, 'filter'])->name('admin.materials.filter');
+
+    //Payments
+    Route::get('/payments', [PaymentController::class, 'index'])->name('admin.payments.index');
+    Route::get('/payments/create', [PaymentController::class, 'create'])->name('admin.payments.create');
+    Route::post('/payments', [PaymentController::class, 'store'])->name('admin.payments.store');
+    Route::get('/payments/{payments}/edit', [PaymentController::class, 'edit'])->name('admin.payments.edit');
+    Route::put('/payments/{payments}', [PaymentController::class, 'update'])->name('admin.payments.update');
+    Route::delete('/payments/{payments}', [PaymentController::class, 'destroy'])->name('admin.payments.destroy');
+    Route::get('/payments/filter', [PaymentController::class, 'filter'])->name('admin.payments.filter');
 
     // admin
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin');
