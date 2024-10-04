@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MaterialInProject extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $fillable = [
         'material_id',
         'project_id',

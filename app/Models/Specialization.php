@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Specialization extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $fillable = [
         'name',
     ];
     public function designer()
     {
-        return $this->belongsTo(Designer::class);
+        return $this->hasMany(Designer::class);
     }
 }

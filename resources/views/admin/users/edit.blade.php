@@ -40,7 +40,7 @@
                 @enderror
             </div>
 
-            <div class="form-group">
+            {{--<div class="form-group">
                 <label for="role_id">Роль</label>
                 <select class="form-control" id="role_id" name="role_id" required>
                     <option value="">Виберіть роль</option>
@@ -53,9 +53,50 @@
                 @error('role_id')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
+            </div>--}}
+
+            <div class="form-group">
+                <label for="role_id">Роль</label>
+                <select id="role_id" name="role_id" class="form-control" required>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                            {{ $role->role_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div id="specialization-section" class="form-group" style="display: none;">
+                <label for="specialization_id">Спеціалізація</label>
+                <select id="specialization_id" name="specialization_id" class="form-control">
+                    <option value="">Виберіть спеціалізацію</option>
+                    @foreach ($specializations as $specialization)
+                        <option value="{{ $specialization->id }}" {{ $user->specialization_id == $specialization->id ? 'selected' : '' }}>
+                            {{ $specialization->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <button type="submit" class="btn btn-success">Зберегти</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roleSelect = document.getElementById('role_id');
+            const specializationSection = document.getElementById('specialization-section');
+
+            // Функція для перевірки вибору ролі
+            function toggleSpecializationField() {
+                if (roleSelect.options[roleSelect.selectedIndex].text.toLowerCase() === 'designer') {
+                    specializationSection.style.display = 'block';
+                } else {
+                    specializationSection.style.display = 'none';
+                }
+            }
+
+            roleSelect.addEventListener('change', toggleSpecializationField);
+            toggleSpecializationField(); // Викликати функцію при завантаженні сторінки
+        });
+    </script>
 @endsection

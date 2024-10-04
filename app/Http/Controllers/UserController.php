@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Designer;
+use App\Models\Specialization;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
@@ -23,8 +24,9 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all(); // Отримуємо всі ролі
-        return view('admin.users.create', compact('roles'));
+        $roles = Role::all();
+        $specializations = Specialization::all();
+        return view('admin.users.create', compact('roles', 'specializations'));
     }
 
     public function store(Request $request)
@@ -34,42 +36,52 @@ class UserController extends Controller
             'last_name' => 'required',
             'patronymic' => 'required',
             'password' => 'required|min:6',
-            'role_id' => 'required|exists:roles,id', // Перевіряємо, що роль існує
+            'role_id' => 'required|exists:roles,id',
+            'specialization_id' => 'nullable|exists:specializations,id',
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']); // Хешуємо пароль
-
-        User::create($validatedData);
-
+        $validatedData['password'] = bcrypt($validatedData['password']);
+        if($validatedData['role_id'] == Role::where('role_name', 'designer')->first()->id){
+            $validatedData['specialization_id'] = $request->specialization_id;
+            Designer::create($validatedData);
+            $test = new Designer();
+        }
+        else {
+            User::create($validatedData);
+        }
         return redirect()->route('admin.users.index')->with('success', 'Користувача успішно створено');
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::all(); // Отримуємо всі ролі
-        return view('admin.users.edit', compact('user', 'roles'));
+        $roles = Role::all();
+        $specializations = Specialization::all();
+        return view('admin.users.edit', compact('user', 'roles', 'specializations'));
     }
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-
         $validatedData = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
             'patronymic' => 'required',
-            'role_id' => 'required|exists:roles,id', // Перевіряємо, що роль існує
-            'password' => 'nullable|min:6', // Пароль не є обов'язковим для оновлення
+            'role_id' => 'required|exists:roles,id',
+            'password' => 'nullable|min:6',
+            'specialization_id' => 'nullable|exists:specializations,id',
         ]);
-
+        $user =  User::findOrFail($id);
         if ($request->filled('password')) {
-            $validatedData['password'] = bcrypt($validatedData['password']); // Хешуємо новий пароль
+            $validatedData['password'] = bcrypt($validatedData['password']);
         } else {
-            unset($validatedData['password']); // Вилучаємо пароль, якщо він не заповнений
+            unset($validatedData['password']);
         }
 
         $user->update($validatedData);
+        if($validatedData['role_id'] == Role::where('role_name', 'designer')->first()->id){
+            $user = Designer::findOrFail($id);
+            $user->update($validatedData);
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'Користувача успішно оновлено');
     }

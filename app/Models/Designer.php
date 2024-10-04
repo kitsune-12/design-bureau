@@ -10,6 +10,11 @@ class Designer extends User
     use HasFactory;
     protected $table = 'users';
     protected $fillable = [
+        'first_name',
+        'last_name',
+        'patronymic',
+        'password',
+        'role_id',
         'specialization_id',
 
     ];

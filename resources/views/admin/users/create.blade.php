@@ -51,7 +51,44 @@
                 @enderror
             </div>
 
+            {{--<div class="form-group">
+                <label for="role">Роль</label>
+                <select id="role_id" name="role_id" class="form-control" required>
+                    @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                    @endforeach
+                </select>
+            </div>--}}
+
+            <div id="specialization-section" class="form-group" style="display: none;">
+                <label for="specialization_id">Спеціалізація</label>
+                <select id="specialization_id" name="specialization_id" class="form-control">
+                    <option value="">Виберіть спеціалізацію</option>
+                    @foreach ($specializations as $specialization)
+                        <option value="{{ $specialization->id }}">{{ $specialization->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button type="submit" class="btn btn-success">Зберегти</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const roleSelect = document.getElementById('role_id');
+            const specializationSection = document.getElementById('specialization-section');
+
+            function toggleSpecializationField() {
+                if (roleSelect.options[roleSelect.selectedIndex].text.toLowerCase() === 'designer') {
+                    specializationSection.style.display = 'block';
+                } else {
+                    specializationSection.style.display = 'none';
+                }
+            }
+
+            roleSelect.addEventListener('change', toggleSpecializationField);
+            toggleSpecializationField();
+        });
+    </script>
 @endsection
