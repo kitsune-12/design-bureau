@@ -13,11 +13,12 @@ class Material extends Model
     protected $fillable = [
         'name',
         'type',
-        'stockAvailability',
+        'description',
+        'stock_availability',
     ];
 
     protected $casts = [
-        'stockAvailability' => 'integer',
+        'stock_availability' => 'integer',
     ];
 
     public function projects()

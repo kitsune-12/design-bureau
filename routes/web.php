@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\UserController;
@@ -38,6 +39,15 @@ Route::prefix('admin')->group(function () {
     Route::put('/specializations/{specialization}', [SpecializationController::class, 'update'])->name('admin.specializations.update');
     Route::delete('/specializations/{specialization}', [SpecializationController::class, 'destroy'])->name('admin.specializations.destroy');
     Route::get('/specializations/filter', [SpecializationController::class, 'filter'])->name('admin.specializations.filter');
+
+    //Material
+    Route::get('/materials', [MaterialController::class, 'index'])->name('admin.materials.index');
+    Route::get('/materials/create', [MaterialController::class, 'create'])->name('admin.materials.create');
+    Route::post('/materials', [MaterialController::class, 'store'])->name('admin.materials.store');
+    Route::get('/materials/{material}/edit', [MaterialController::class, 'edit'])->name('admin.materials.edit');
+    Route::put('/materials/{material}', [MaterialController::class, 'update'])->name('admin.materials.update');
+    Route::delete('/materials/{material}', [MaterialController::class, 'destroy'])->name('admin.materials.destroy');
+    Route::get('/materials/filter', [MaterialController::class, 'filter'])->name('admin.materials.filter');
 
     // admin
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin');
