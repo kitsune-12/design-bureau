@@ -9,12 +9,29 @@ class Designer extends User
 {
     protected $fillable = [
         'specialization_id',
+
     ];
     protected function casts(): array
     {
         return [
             'specialization_id' => 'int',
         ];
+    }
+    public function specialization(){
+        return $this->hasOne(Specialization::Class);
+    }
+
+    public function project()
+    {
+        return $this->hasMany(Project::Class);
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('designer', function ($builder) {
+            $builder->where('role', 'designer');
+        });
     }
 
 }
