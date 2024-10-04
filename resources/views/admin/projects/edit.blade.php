@@ -100,7 +100,7 @@
             <script>
                 const materialsContainer = document.getElementById('materials-container');
                 const addMaterialButton = document.getElementById('add-material');
-                let materialCount = {{ $project->materials->count() }}; // Підрахунок вже обраних матеріалів
+                let materialCount = {{ $project->materials->count() }};
 
                 addMaterialButton.addEventListener('click', function () {
                     const newMaterialItem = document.createElement('div');
@@ -121,7 +121,7 @@
 
                 materialsContainer.addEventListener('click', function (event) {
                     if (event.target.classList.contains('remove-material')) {
-                        event.target.closest('.material-item').remove(); // Видаляє матеріал
+                        event.target.closest('.material-item').remove();
                     }
                 });
 

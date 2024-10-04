@@ -92,7 +92,7 @@
         </form>
 
         <script>
-            let materialCount = 1; // Лічильник для кількості вибраних матеріалів
+            let materialCount = 1;
 
             document.getElementById('add-material').addEventListener('click', function () {
                 const materialsContainer = document.getElementById('materials-container');
@@ -123,7 +123,7 @@
                     const selectedOption = event.target.options[event.target.selectedIndex];
                     const stock = selectedOption.getAttribute('data-stock');
                     const maxStockSpan = event.target.closest('.material-select').querySelector('.max-stock');
-                    maxStockSpan.textContent = stock; // Встановлюємо максимальний запас
+                    maxStockSpan.textContent = stock;
                 }
             });
         </script>
